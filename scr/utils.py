@@ -4,7 +4,7 @@ from scipy.stats import shapiro, spearmanr, levene, kruskal, mannwhitneyu, chi2_
 
 
 
-#Normalizar pais
+#Normalizar paises
 def normalizar_pais(df, columnas_a_normalizar, df_paises_norm):
     for col in columnas_a_normalizar:
         df = pd.merge(
