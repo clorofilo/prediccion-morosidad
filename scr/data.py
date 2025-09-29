@@ -2,18 +2,7 @@ import pandas as pd
 import os 
 from utils import (
     normalizar_pais,
-    agrupar_pais,
-    comprobar_normalidad,
-    correlacion_variables,
-    comprobar_nomalidad_y_varianza,
-    calcular_fuerza_asociacion_2_grupos,
-    calcular_fuerza_asociacion_mas_2_grupos,
-    cramers_v,
-    calcular_independencia_categoricas,
-    agrupar_tramo,
-    cohens_d,
-    r_mannwhitney,
-    prueba_comparacion_2grupos_variable
+    agrupar_pais
 )
 
 path_raw_data = os.path.join( 'data','raw')
@@ -172,6 +161,6 @@ df_convo_deuda = pd.merge(df_convo, df_deuda[columnas_deuda], how='left', left_o
 #Eliminar filas sin data
 df_convo_deuda = df_convo_deuda.dropna(subset=['TIPOLOGIA MATRICULA', 'Moroso'])
 
+df_convo_deuda.drop(columns= ['TIPOLOGIA MATRICULA', 'TIPOLOGIA ALUMNO', 'ID OPORTUNIDAD', 'ID NACS',  'CONVOCATORIA'], inplace = True)
 
-df_convo_deuda.to_csv(os.path.join('data','processed','data.csv'))
-
+df_convo_deuda.to_csv(os.path.join('data','processed','data.csv'), index=False)
