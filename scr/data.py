@@ -96,7 +96,9 @@ for col in columnas_categoricas:
 #CREACION DE NUEVAS COLUMNAS
 #Medio de pago PI = resto de pagos
 df_convo['MANTIENE MEDIO PAGO'] = df_convo['MEDIO PAGO PI'].astype(str) == df_convo['MEDIO PAGO IMPORTE PENDIENTE'].astype(str)
-
+df_convo['DIFERENCIA PI vs. IMPORTE PTE'] = (
+	df_convo['MEDIO PAGO PI'].astype(str) == df_convo['MEDIO PAGO IMPORTE PENDIENTE'].astype(str)
+)
 #Cambio en la fecha 1a cuota
 df_convo['DIFERENCIA FECHA 1ra CUOTA - ORIGINAL'] = (df_convo['FECHA 1ra CUOTA'] - df_convo['FECHA 1ra CUOTA ORIGINAL']).dt.days
 df_convo.fillna({'DIFERENCIA FECHA 1ra CUOTA - ORIGINAL': 0}, inplace=True)
