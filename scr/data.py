@@ -154,7 +154,7 @@ df_deuda.index = df_deuda.index.astype(int)
 #Recalcular % de Impago actual Vdo
 df_deuda['% Impagado Actual Vdo'] = (df_deuda['Importe Impagado Actual']/df_deuda['Importe Vdo'])
 #Selecciona las columnas de df_convo que se quieren unir con df_deuda
-columnas_deuda = ['Moroso', '% Impagado Actual Vdo', 'Importe Impagado Actual']
+columnas_deuda = ['Moroso', '% Impagado Actual Vdo', 'Importe Impagado Actual', 'Importe Cobrado']
 
 #Unir df_convo con df_deuda para saber si es moroso o no
 df_convo_deuda = pd.merge(df_convo, df_deuda[columnas_deuda], how='left', left_on='ID NACS', right_index=True)
