@@ -6,7 +6,7 @@ Este repositorio contiene el flujo completo para construir y desplegar un modelo
 - Limpieza, normalizacion y enriquecimiento de los datos historicos (`scr/data.py`).
 - Utilidades de analisis estadistico y generacion de features (`scr/utils.py`, `scr/feature.py`).
 - Modelo Random Forest optimizado serializado en `models/modelo_random_forest_optimizado.pkl`.
-- Aplicacion web (`streamlit_app/app.py`) que calcula automaticamente los campos dependientes y muestra la probabilidad de impago solo cuando supera el 30 %.
+- Aplicacion web (`streamlit_app/app.py`) que calcula automaticamente los campos dependientes y muestra la probabilidad de impago.
 - Notebooks exploratorios y de entrenamiento en la carpeta `notebooks/` para reproducir el proceso completo.
 
 ## Estructura del proyecto
@@ -57,9 +57,6 @@ Si el importe pendiente es cero, la probabilidad de impago se fuerza a 0. Solo s
 - El preprocesamiento de datos se encuentra en `scr/data.py`. Ejecutalo cuando existan nuevas fuentes en `data/raw/` para actualizar `data/processed/data.csv`.
 - Los notebooks de la carpeta `notebooks/` documentan el entrenamiento, la seleccion de hiperparametros y la evaluacion. Ejecutalos en orden para regenerar el modelo si se actualizan los datos.
 - Guarda los artefactos nuevos en `models/` y actualiza la app si cambia el nombre o formato del modelo.
-
-## Notas sobre los datos
-Los archivos en `data/raw/` contienen informacion sensible de alumnos/clientes, por lo que **no se deben versionar ni compartir** fuera del entorno controlado. El repositorio distribuye unicamente scripts y artefactos anonimizados.
 
 ## Contacto
 Para dudas o contribuciones, abre un issue o contacta al mantenedor del repositorio.
