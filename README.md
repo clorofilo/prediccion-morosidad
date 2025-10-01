@@ -1,12 +1,15 @@
 ﻿# Prediccion de Morosidad en Educacion Superior
 
 Este repositorio contiene el flujo completo para construir y desplegar un modelo de clasificacion que estima la probabilidad de impago de nuevos alumnos en una escuela de negocios. Incluye el preprocesamiento de datos historicos, el entrenamiento del modelo y una aplicacion Streamlit para consultar predicciones de forma interactiva.
+## App en Streamlit Cloud
+Puedes acceder directamente a la app a través del siguiente enlace:
 
+[Accede a la app](https://prediccion-morosidad.streamlit.app/)
 ## Caracteristicas principales
 - Limpieza, normalizacion y enriquecimiento de los datos historicos (`scr/data.py`).
 - Utilidades de analisis estadistico y generacion de features (`scr/utils.py`, `scr/feature.py`).
 - Modelo Random Forest optimizado serializado en `models/modelo_random_forest_optimizado.pkl` y pipeline completo en `models/pipeline_final.pkl`.
-- Aplicacion web (`streamlit_app/app.py`) que calcula automaticamente los campos dependientes y muestra la probabilidad de impago solo cuando supera el 30 %.
+- Aplicacion web (`streamlit_app/app.py`) que calcula automaticamente los campos dependientes y muestra la probabilidad de impago.
 - Notebooks exploratorios y de entrenamiento en la carpeta `notebooks/` para reproducir el proceso completo.
 
 ## Estructura del proyecto
@@ -16,12 +19,16 @@ Este repositorio contiene el flujo completo para construir y desplegar un modelo
   - `test/`: conjuntos de prueba exportados desde los notebooks
 - `models/`: artefactos entrenados (`.pkl`)
 - `notebooks/`: analisis exploratorio y entrenamiento
+  - `01_eda.ipynb`: Análisis esxploratorio y estadístico de los datos.
+  - `02_model_training.ipynb`: Feature engineering, entrenamiento y guardado de los modelos. 
+  - `03_evaluation.ipynb`: Evaluación de los distintos modelos
 - `scr/`
   - `data.py`: pipeline de tratamiento de datos
   - `feature.py`: conversores y helpers
   - `utils.py`: utilidades de estadistica y evaluacion
 - `streamlit_app/`
   - `app.py`: aplicacion Streamlit de consulta del modelo
+- `example_csv/` archivo de ejemplo para cargar en la app de streamlit
 - `requirements.txt`: dependencias del proyecto
 - `README.md`
 
