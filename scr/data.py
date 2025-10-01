@@ -163,6 +163,8 @@ df_convo_deuda = pd.merge(df_convo, df_deuda[columnas_deuda], how='left', left_o
 #Eliminar filas sin data
 df_convo_deuda = df_convo_deuda.dropna(subset=['TIPOLOGIA MATRICULA', 'Moroso'])
 
+df_convo_deuda['ID PROGRAMA'] = df_convo_deuda['ID PROGRAMA'].str[-3:]
+
 df_convo_deuda.drop(columns= ['TIPOLOGIA MATRICULA', 'TIPOLOGIA ALUMNO', 'ID OPORTUNIDAD', 'ID NACS',  'CONVOCATORIA'], inplace = True)
 
 df_convo_deuda.to_csv(os.path.join('data','processed','data.csv'), index=False)
