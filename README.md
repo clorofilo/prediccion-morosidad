@@ -51,28 +51,59 @@ La interfaz solicita los datos relevantes del alumno; el script calcula automati
 - Importe pendiente (facturacion neta - importe cobrado, nunca negativo).
 - Consistencia de los medios de pago, que alimenta features binarias.
 
-Si el importe pendiente es cero, la probabilidad de impago se fuerza a 0. Solo se muestra la probabilidad cuando es mayor o igual al 30 %.
 
 ## Reentrenamiento del modelo
 - El preprocesamiento de datos se encuentra en `scr/data.py`. Ejecutalo cuando existan nuevas fuentes en `data/raw/` para actualizar `data/processed/data.csv`.
 - Los notebooks de la carpeta `notebooks/` documentan el entrenamiento, la seleccion de hiperparametros y la evaluacion. Ejecutalos en orden para regenerar el modelo si se actualizan los datos.
 - Guarda los artefactos nuevos en `models/` y actualiza la app si cambia el nombre o formato del modelo.
 
-## Notas sobre los datos
-Los archivos en `data/raw/` contienen informacion sensible de alumnos/clientes, por lo que **no se deben versionar ni compartir** fuera del entorno controlado. El repositorio distribuye unicamente scripts y artefactos anonimizados.
+# Resultados visuales del análisis y del modelo
 
-## Conclusiones del EDA
-- Los graficos `reports/01_distribucion_impago_segun_pi.jpg` y `reports/02_distribucion_impago_segun_pi_100.jpg` muestran que el 18.9 % de los alumnos termina en morosidad, con grandes diferencias segun el medio de pago inicial: `TARJETA` reduce la tasa al 12.6 %, mientras `PAYBAY` y `PAYCOMET` la elevan por encima del 23 %.
-- `reports/03_distribucion_impago_segun_pi_agrupado.jpg` y `reports/04_distribucion_impago_segun_pi_agrupado_2.jpg` confirman que mantener el mismo medio de pago en PI e importe pendiente baja la morosidad del 22.0 % al 13.9 %.
-- El heatmap de `reports/05_correlacion_categoricas_morosidad.jpg` resalta la importancia de las variables ligadas a los metodos de cobro (`MANTIENE MEDIO PAGO`, `MEDIO PAGO IMPORTE PENDIENTE`), alineadas con las diferencias observadas en las distribuciones anteriores.
-- `reports/06_correlacion_numericas_morosidad.jpg` evidencia la fuerte relacion negativa entre `Importe Cobrado` y morosidad (r = -0.55), seguida por correlaciones mucho menores en `% INSCRIPCION` y `% DTO`.
-- Los boxplots de `reports/07_boxplots.png` muestran que los alumnos al corriente de pago presentan medianas de `Importe Cobrado` cercanas a 4.9 k€, casi el doble que los morosos (2.6 k€), reforzando la relevancia de los importes abonados tempranamente.
+## Distribución de impago según % de inscripción
+![Distribución impago por % inscripción](reports/03_distribucion_impago_segun_pi_agrupado.jpg)
 
-## Conclusiones de la evaluacion del modelo
-- Sobre un conjunto de prueba estratificado (20 %), el pipeline (`models/pipeline_final.pkl`) alcanza `accuracy = 0.63`, `recall = 0.64`, `precision = 0.29`, `f1 = 0.39` y `roc_auc = 0.67`; estos resultados se reflejan en `reports/11-matrices_confusion_final.jpg`.
-- `reports/12-curvas_ROC.jpg` muestra un ROC estable alrededor de 0.67 y `reports/14-curvas_precision_recall.jpg` evidencia que operar en recalls por encima de 0.6 implica sacrificar precision, coherente con el uso del modelo como filtro temprano.
-- El comparativo `reports/13-comparacion_auc_f1.jpg` confirma que el Random Forest optimizado supera a los modelos de referencia en AUC y F1, mientras que `reports/09-matrices_confusion_modelos_optimizados.jpg` ilustra la mejora frente a configuraciones previas.
-- Las visualizaciones del arbol (`reports/08-decision_tree_structure.jpg` y `reports/10-decision_tree_structure.jpg`) muestran divisiones iniciales basadas en `Importe Cobrado`, `MANTIENE MEDIO PAGO` y el medio de cobro, en linea con los hallazgos del EDA.
+Se observa que los grupos con menor % de inscripción concentran mayores tasas de impago (13.9 % en el grupo 0–13 %), mientras que al aumentar la inscripción inicial, la morosidad desciende (7.2 % en el grupo 16–20 % y 6.1 % en el resto). Esto confirma la importancia de los pagos tempranos.
 
-## Contacto
-Para dudas o contribuciones, abre un issue o contacta al mantenedor del repositorio.
+---
+
+## Asociación de variables categóricas con morosidad
+![Correlación categóricas](reports/05_correlacion_categoricas_morosidad.jpg)
+
+Las variables categóricas más asociadas a la morosidad son **País de residencia** (Cramér’s V = 0.21), **Forma de pago** (0.20) y **Nacionalidad** (0.19). Aunque las asociaciones no son extremadamente fuertes, sí reflejan patrones relevantes en los métodos y origen de los alumnos.
+
+---
+
+## Tamaño del efecto en variables numéricas
+![Correlación numéricas](reports/06_correlacion_numericas_morosidad.jpg)
+
+Entre las variables numéricas, la más influyente es el **Importe Cobrado** (efecto = 0.55, negativo respecto a la morosidad). Otras variables como **Número de cuotas** y la **Diferencia entre fecha de producción y 1ª cuota** tienen un impacto mucho menor.
+
+---
+
+## Árbol de decisión
+![Árbol de decisión](reports/10-decision_tree_structure.jpg)
+
+El árbol de decisión muestra que las primeras divisiones relevantes para predecir morosidad están relacionadas con el **mantenimiento del medio de pago**, el **país de residencia** y el **importe cobrado**. Esto está alineado con los hallazgos del análisis exploratorio.
+
+---
+
+## Curvas Precision-Recall
+![Curvas Precision-Recall](reports/14-curvas_precision_recall.jpg)
+
+El **Random Forest** domina en todos los rangos de recall, mostrando un mejor equilibrio entre precisión y exhaustividad. El **árbol de decisión** queda en un nivel intermedio y la **regresión logística** se rezaga, especialmente en recalls altos.
+
+---
+
+## Curvas ROC
+![Curvas ROC](reports/12-curvas_ROC.jpg)
+
+El **Random Forest** alcanza un AUC de 0.92, muy superior al del **árbol de decisión** (0.80) y la **regresión logística** (0.77). Esto confirma su mayor capacidad discriminativa.
+
+---
+
+## Comparación de métricas entre modelos
+![Comparación métricas](reports/13-comparacion_auc_f1.jpg)
+
+El **Random Forest** logra el mejor desempeño tanto en **F1-score (0.84)** como en **ROC-AUC (0.92)**, confirmándose como la mejor alternativa frente a modelos más simples.
+
+---
