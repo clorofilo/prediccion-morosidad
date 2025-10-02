@@ -32,6 +32,7 @@ Puedes acceder directamente a la app a través del siguiente enlace:
 - `requirements.txt`: dependencias del proyecto
 - `README.md`
 
+> Todos los datos subidos a este repositorio han sido alterados por motivos de confidencialidad
 ## Requisitos
 - Python 3.10+ (el proyecto se ha probado con Python 3.11).
 - Dependencias listadas en `requirements.txt`:
@@ -84,7 +85,6 @@ Las variables categóricas más asociadas a la morosidad son **País de residenc
 ![Correlación numéricas](reports/06_correlacion_numericas_morosidad.jpg)
 
 Entre las variables numéricas, la más influyente es el **Importe Cobrado** (efecto = 0.55, negativo respecto a la morosidad). Otras variables como **Número de cuotas** y la **Diferencia entre fecha de producción y 1ª cuota** tienen un impacto mucho menor.
-
 ---
 
 ## Árbol de decisión
@@ -120,10 +120,9 @@ El **Random Forest** logra el mejor desempeño tanto en **F1-score (0.84)** como
 
 ## Segmentos con mayor morosidad en variables categoricas
 El ultimo apartado del notebook notebooks/01_eda.ipynb cuantifica la probabilidad de morosidad por categoria usando los datos historicos.
-- El medio de pago inicial muestra mayor riesgo cuando combina TPVF y tarjeta (100 %) o usa TPVF en solitario (28 %), mientras que las transacciones solamente con tarjeta bajan al 13 %.
-- El medio seleccionado para saldar importes pendientes destaca a Link de pago (24 %) como el canal con mas morosidad, frente a transferencias y domiciliaciones con valores por debajo del 10 %.
-- Los planes de pago aplazado concentran el 23 % de morosos, casi el doble que el pago en efectivo y por encima de las modalidades al contado (< 4 %).
-- Los programas identificados con los codigos 960, 962 y 940 superan el 27 % de morosidad, mientras que el programa 800 y otros como 230 o 790 apenas registran casos.
-- Las agrupaciones geograficas confirman mayor riesgo en AFR/ASIA (28-33 %) y en paises como Mexico y Peru (> 25 %), frente a Espana y EUR+US que se mantienen por debajo del 11 %.
-- No mantener el medio de pago original o tener diferencias entre el porcentaje de inscripcion y el importe pendiente eleva la morosidad al 22 %, frente al 14 % cuando se preserva la coherencia.
-> Nota: varias categorias extremas (100 % o 0 %) corresponden a pocas observaciones, por lo que conviene revisarlas antes de derivar acciones.
+- El **medio de pago inicial** muestra** mayor riesgo cuando combina TPVF y tarjet**a (100 %) o* *usa TPVF en solitario** (28 %), mientras que las transacciones solamente con tarjeta bajan al 13 %.
+- Los planes de **pago aplazado concentran el 23 % de morosos**, casi el doble que el pago en efectivo y por encima de las modalidades al contado (< 4 %).
+- Los **programas identificados con los codigos 960, 962 y 940** superan el 27 % de morosidad, mientras que el programa 800 y otros como 230 o 790 apenas registran casos.
+- Las agrupaciones geograficas confirman mayor riesgo en **AFR/ASIA (28-33 %) y en paises como Mexico y Peru (> 25 %)**, frente a **Espana y EUR+US que se mantienen por debajo del 11 %**.
+- **No mantener el medio de pago original o tener diferencias entre el porcentaje de inscripcion y el importe pendiente eleva la morosidad al 22 %**, frente al 14 % cuando se preserva la coherencia.
+> *Nota: varias categorias extremas (100 % o 0 %) corresponden a pocas observaciones, por lo que conviene revisarlas antes de derivar acciones.*
