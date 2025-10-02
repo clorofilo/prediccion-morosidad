@@ -1,6 +1,12 @@
 ﻿# Prediccion de Morosidad en Educacion Superior
 
 Este repositorio contiene el flujo completo para construir y desplegar un modelo de clasificacion que estima la probabilidad de impago de nuevos alumnos en una escuela de negocios. Incluye el preprocesamiento de datos historicos, el entrenamiento del modelo y una aplicacion Streamlit para consultar predicciones de forma interactiva.
+## Wiki del proyecto
+Puedes acceder a la wiki a trav´es del siguiente enlace;
+
+[Accede a la Wiki](https://github.com/clorofilo/prediccion-morosidad/wiki)
+
+
 ## App en Streamlit Cloud
 Puedes acceder directamente a la app a través del siguiente enlace:
 
